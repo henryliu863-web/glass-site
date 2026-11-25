@@ -54,6 +54,20 @@ SECRET_KEY=$(python -c "import secrets;print(secrets.token_hex(32))") gunicorn -
 - 新闻管理、单页管理、招聘管理
 - 留言管理、定单管理（可改处理状态）、应聘简历、会员管理；未读数量显示在菜单上
 
+## 智能客服
+
+右侧“在线客服”是接入 Claude 的 AI 客服（`chat.py`）：
+
+- 知识来源：`config.py` 里的公司信息 + 后台“常见问题” + 产品目录（实时读取，后台改了马上生效）
+- 推荐产品时附带详情页链接；不编造价格、库存
+- 客户留下称呼和电话后自动登记到后台“留言管理”，标题为“【智能客服】客户询盘”
+- 窗口右上角“转人工”显示电话、手机、微信（在 `config.py` 的 `SITE` 里改）
+- 后台“客服对话”可查看所有对话记录
+
+需要在 Railway 的 Variables 里设置 `ANTHROPIC_API_KEY`。未设置或接口出错时，客服会自动回复人工联系方式。
+可选变量：`CHAT_MODEL`（默认 claude-haiku-5-5）、`CHAT_LIMIT_PER_IP_DAY`（每个访客每天提问上限，默认 40）、
+`CHAT_LIMIT_TOTAL_DAY`（全站每天上限，默认 1500）。
+
 ## 产品规格表格式
 
 产品的“规格表(JSON)”字段示例：

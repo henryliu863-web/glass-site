@@ -38,6 +38,8 @@ SITE = {
     "address": "某省某市国际商贸城二期 G 区 2 楼 2 街 00000 商位",
     "business_hours": "9:00-18:00",
 
+    "wechat": "your-wechat-id",                   # 转人工用的微信号（占位）
+
     # 页脚电话（带国际区号的展示格式）
     "footer_phone": "0086 000 00000000",
 }
@@ -46,3 +48,16 @@ SITE = {
 PRODUCTS_PER_PAGE = 32
 NEWS_PER_PAGE = 20
 JOBS_PER_PAGE = 10
+
+# ---- 智能客服 ----
+# API Key 只从环境变量读取（在 Railway 的 Variables 里设置 ANTHROPIC_API_KEY），不要写进代码
+ANTHROPIC_API_KEY = os.environ.get("ANTHROPIC_API_KEY", "")
+ANTHROPIC_BASE_URL = os.environ.get("ANTHROPIC_BASE_URL", "https://api.anthropic.com")
+CHAT_MODEL = os.environ.get("CHAT_MODEL", "claude-haiku-5-5")
+CHAT_MAX_TOKENS = 800
+CHAT_HISTORY_TURNS = 10          # 带给模型的最近对话轮数
+CHAT_LIMIT_PER_IP_DAY = int(os.environ.get("CHAT_LIMIT_PER_IP_DAY", 40))     # 每个访客每天最多提问次数
+CHAT_LIMIT_TOTAL_DAY = int(os.environ.get("CHAT_LIMIT_TOTAL_DAY", 1500))     # 全站每天最多提问次数（控制费用）
+CHAT_MAX_INPUT_CHARS = 500
+CHAT_WELCOME = "您好！我是在线客服小助手，可以为您介绍产品、解答下单和发货等问题。请问有什么可以帮您？"
+CHAT_QUICK_QUESTIONS = ["玻璃刀怎么选？", "地弹簧承重多少？", "怎么下单？", "起订量和发货时间"]

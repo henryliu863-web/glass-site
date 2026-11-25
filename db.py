@@ -104,6 +104,34 @@ CREATE TABLE IF NOT EXISTS feedback (
     created_at TEXT NOT NULL DEFAULT (datetime('now', 'localtime'))
 );
 
+-- 智能客服
+CREATE TABLE IF NOT EXISTS faqs (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    question TEXT NOT NULL,
+    answer TEXT NOT NULL,
+    sort INTEGER NOT NULL DEFAULT 0
+);
+
+CREATE TABLE IF NOT EXISTS chat_sessions (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    token TEXT UNIQUE NOT NULL,
+    ip TEXT NOT NULL DEFAULT '',
+    first_question TEXT NOT NULL DEFAULT '',
+    messages INTEGER NOT NULL DEFAULT 0,
+    has_lead INTEGER NOT NULL DEFAULT 0,
+    created_at TEXT NOT NULL DEFAULT (datetime('now', 'localtime')),
+    updated_at TEXT NOT NULL DEFAULT (datetime('now', 'localtime'))
+);
+
+CREATE TABLE IF NOT EXISTS chat_messages (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    session_id INTEGER NOT NULL REFERENCES chat_sessions(id) ON DELETE CASCADE,
+    role TEXT NOT NULL,            -- user / assistant
+    content TEXT NOT NULL,
+    created_at TEXT NOT NULL DEFAULT (datetime('now', 'localtime'))
+);
+CREATE INDEX IF NOT EXISTS idx_chat_messages_session ON chat_messages(session_id);
+
 CREATE TABLE IF NOT EXISTS orders (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     member_id INTEGER REFERENCES members(id) ON DELETE SET NULL,
@@ -165,6 +193,9 @@ def init_db(seed=True):
         )
         if seed and not db.execute("SELECT 1 FROM categories").fetchone():
             _seed(db)
+        if seed and not db.execute("SELECT 1 FROM faqs").fetchone():
+            for i, (q, a) in enumerate(SEED_FAQS, 1):
+                db.execute("INSERT INTO faqs (question, answer, sort) VALUES (?,?,?)", (q, a, i))
         db.commit()
     except Exception:
         db.rollback()
@@ -254,6 +285,18 @@ SEED_JOBS = [
      "对工作认真负责，有责任心，年龄 20-35 岁，愿意学习专业知识，上班准时，能长期稳定工作者优先。", "2014-11-13"),
     ("外贸业务员", "5", "公司所在地", "面议", 10, "英语读写流利，有五金类产品外贸经验者优先。", "2014-04-12"),
     ("玻璃工具销售员", "2", "公司所在地", "面议", 30, "面议", "2014-04-12"),
+]
+
+
+# 智能客服常见问题（示例，请在后台“常见问题”里改成真实情况）
+SEED_FAQS = [
+    ("起订量是多少？", "常规产品一般 1 箱起订，样品可单独购买；具体以业务员报价为准。"),
+    ("多久发货？", "现货产品一般付款后 1-3 个工作日内发货；定制或大批量订单交期另行确认。"),
+    ("支持哪些付款方式？", "支持银行转账、对公账户付款；外贸订单支持 T/T，具体可与业务员确认。"),
+    ("可以定制或贴牌（OEM）吗？", "可以。支持定制包装、贴牌，需要提供数量和要求，由业务员评估后报价。"),
+    ("可以寄样品吗？", "可以提供样品，样品费和运费需客户承担，正式下单后可协商抵扣。"),
+    ("产品有质量问题怎么办？", "收货后如发现质量问题，请拍照并联系我们，核实后给予退换。"),
+    ("怎么下单？", "可以在网站“在线定单”页面填写想购买的产品和联系方式，也可以直接电话或微信联系业务员。"),
 ]
 
 

@@ -39,7 +39,9 @@ def create_app():
     app.teardown_appcontext(close_db)
 
     from admin import bp as admin_bp
+    from chat import bp as chat_bp
     app.register_blueprint(admin_bp)
+    app.register_blueprint(chat_bp)
 
     register_helpers(app)
     register_routes(app)

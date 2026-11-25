@@ -52,3 +52,11 @@ button.link { background: none; border: 0; color: #c0261a; cursor: pointer; padd
 .login-box label { display: block; margin-bottom: 12px; }
 .login-box input { display: block; width: 100%; padding: 7px 8px; margin-top: 4px; }
 .login-box button { width: 100%; padding: 8px; background: #F7E300; border: 0; font-size: 15px; cursor: pointer; }
+.meta { color: #666; }
+.meta .lead { color: #2f7a12; }
+.transcript { max-width: 760px; background: #fff; border: 1px solid #e6e6e6; padding: 16px; }
+.tm { margin-bottom: 12px; display: flex; flex-direction: column; }
+.tm .who { font-size: 12px; color: #999; margin-bottom: 2px; }
+.tm .bubble { display: inline-block; max-width: 80%; padding: 8px 12px; border-radius: 8px; background: #f2f3f5; line-height: 1.6; }
+.tm.user { align-items: flex-end; }
+.tm.user .bubble { background: #fff6a8; }

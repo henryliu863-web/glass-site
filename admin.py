@@ -104,6 +104,20 @@ RESOURCES = {
         "editable": [("status", "处理状态", "select", True)],
         "options": {"status": lambda: [(s, s) for s in ("未处理", "已联系", "已发货", "已完成", "已取消")]},
     },
+    "faqs": {
+        "title": "常见问题", "table": "faqs", "order": "sort, id",
+        "list": [("id", "ID"), ("question", "问题"), ("answer", "回答"), ("sort", "排序")],
+        "fields": [("question", "问题", "text", True), ("answer", "回答", "textarea", True),
+                   ("sort", "排序", "number", False)],
+        "search": ["question", "answer"],
+    },
+    "chat_sessions": {
+        "title": "客服对话", "table": "chat_sessions", "order": "updated_at DESC, id DESC", "readonly": True,
+        "list": [("id", "ID"), ("first_question", "首个问题"), ("messages", "轮数"), ("has_lead", "已留资"),
+                 ("ip", "IP"), ("updated_at", "最后时间")],
+        "fields": [],
+        "search": ["first_question"],
+    },
     "members": {
         "title": "会员管理", "table": "members", "order": "id DESC", "readonly": True,
         "list": [("id", "ID"), ("username", "用户名"), ("contact", "联系人"), ("company", "公司"),
@@ -115,7 +129,8 @@ RESOURCES = {
     },
 }
 
-MENU = [("products", "categories"), ("news", "pages", "jobs"), ("feedback", "orders", "job_applications", "members")]
+MENU = [("products", "categories"), ("news", "pages", "jobs"), ("chat_sessions", "faqs"),
+        ("feedback", "orders", "job_applications", "members")]
 
 
 def login_required(view):
@@ -283,6 +298,9 @@ def edit(name, rid):
     res = _res(name)
     row = query(f"SELECT * FROM {res['table']} WHERE id=?", (rid,), one=True) or abort(404)
     readonly = res.get("readonly")
+    if name == "chat_sessions":
+        msgs = query("SELECT * FROM chat_messages WHERE session_id=? ORDER BY id", (rid,))
+        return render_template("admin/chat_view.html", name=name, res=res, row=row, msgs=msgs)
     fields = res.get("editable", []) if readonly else res["fields"]
     if readonly and "is_read" in row.keys() and not row["is_read"]:
         execute(f"UPDATE {res['table']} SET is_read=1 WHERE id=?", (rid,))

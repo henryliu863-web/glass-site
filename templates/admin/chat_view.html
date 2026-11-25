@@ -1,0 +1,11 @@
+{% extends "admin/base.html" %}
+{% block title %}客服对话 #{{ row.id }}{% endblock %}
+{% block content %}
+<h2>客服对话 #{{ row.id }} <a class="btn gray" href="{{ url_for('admin.listing', name=name) }}">返回列表</a></h2>
+<p class="meta">IP：{{ row.ip }}　开始：{{ row.created_at }}　最后：{{ row.updated_at }}　{% if row.has_lead %}<b class="lead">已留下联系方式（见“留言管理”）</b>{% endif %}</p>
+<div class="transcript">
+  {% for m in msgs %}
+  <div class="tm {{ m.role }}"><span class="who">{{ '客户' if m.role == 'user' else '客服助手' }} · {{ m.created_at[11:16] }}</span><div class="bubble">{{ m.content | nl2br }}</div></div>
+  {% else %}<p class="empty">暂无消息</p>{% endfor %}
+</div>
+{% endblock %}

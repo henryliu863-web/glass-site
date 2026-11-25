@@ -112,15 +112,41 @@ img { border: 0; vertical-align: middle; }
 .ico-tel::after { content: "✆"; color: #fff; font-size: 14px; line-height: 22px; position: absolute; inset: 0; text-align: center; }
 .ico-mail::after { content: "✉"; color: #fff; font-size: 12px; line-height: 22px; position: absolute; inset: 0; text-align: center; }
 
-/* ---------- 在线客服浮窗 ---------- */
-.online { position: fixed; right: 0; top: 178px; z-index: 50; display: flex; align-items: flex-start; }
+/* ---------- 在线客服标签 + 智能客服窗口 ---------- */
+.online { position: fixed; right: 0; top: 178px; z-index: 50; }
 .online-tab { width: 22px; padding: 6px 0 8px; background: #fff; border: 1px solid #ddd; border-right: 0; color: #e60012; text-align: center; font-size: 12px; line-height: 1.55; cursor: pointer; box-shadow: -1px 1px 3px rgba(0,0,0,.15); }
+.online-tab:hover { background: #fffbd0; }
 .online-tab .ico { width: 14px; height: 12px; border-radius: 3px; background: none; border: 1px solid #888; margin-bottom: 6px; }
-.online-box { display: none; width: 150px; background: #fff; border: 1px solid #ccc; box-shadow: -2px 2px 6px rgba(0,0,0,.2); }
-.online.open .online-box { display: block; }
-.online-hd { background: #F7E300; font-weight: bold; padding: 4px 8px; display: flex; justify-content: space-between; }
-.online-hd .x { cursor: pointer; }
-.online-box p { margin: 6px 8px; }
+
+.chat { position: fixed; right: 30px; bottom: 20px; z-index: 60; width: 360px; height: 520px; max-height: calc(100vh - 40px); display: flex; flex-direction: column; background: #fff; border: 1px solid #c9c9c9; border-radius: 6px; box-shadow: 0 8px 28px rgba(0,0,0,.28); font: 13px/1.6 Arial, "Microsoft YaHei", sans-serif; overflow: hidden; }
+.chat[hidden] { display: none; }
+.chat-hd { flex: none; height: 42px; display: flex; align-items: center; justify-content: space-between; padding: 0 8px 0 14px; background: #F7E300; color: #3D3B33; font-weight: bold; font-size: 14px; }
+.chat-title .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #2fb344; margin-right: 6px; vertical-align: 1px; }
+.chat-acts button { border: 0; background: transparent; cursor: pointer; font: inherit; color: #3D3B33; padding: 2px 6px; }
+#chat-human { font-size: 12px; border: 1px solid #b9ad00; border-radius: 3px; background: #fff7a0; margin-right: 4px; }
+#chat-close { font-size: 20px; line-height: 1; }
+.chat-human { flex: none; padding: 8px 14px; background: #fffbe0; border-bottom: 1px solid #eee3a0; font-size: 12px; line-height: 1.8; }
+.chat-human[hidden] { display: none; }
+.chat-body { flex: 1; overflow-y: auto; padding: 12px; background: #f5f5f5; }
+.msg { display: flex; margin-bottom: 10px; }
+.msg .bubble { max-width: 82%; padding: 8px 11px; border-radius: 8px; background: #fff; border: 1px solid #e6e6e6; word-break: break-word; white-space: normal; }
+.msg.user { justify-content: flex-end; }
+.msg.user .bubble { background: #fff27a; border-color: #eadb3c; }
+.msg .bubble a { color: #c00; text-decoration: underline; }
+.msg.typing .bubble { color: #999; }
+.msg.typing .bubble span { animation: blink 1.2s infinite; }
+.msg.typing .bubble span:nth-child(2) { animation-delay: .2s; } .msg.typing .bubble span:nth-child(3) { animation-delay: .4s; }
+@keyframes blink { 0%, 80%, 100% { opacity: .2; } 40% { opacity: 1; } }
+.chat-quick { flex: none; display: flex; flex-wrap: wrap; gap: 6px; padding: 6px 10px 0; background: #f5f5f5; }
+.chat-quick:empty { display: none; }
+.chat-quick button { border: 1px solid #d8cc2a; background: #fffbd0; color: #555; border-radius: 12px; padding: 1px 10px; font-size: 12px; cursor: pointer; }
+.chat-quick button:hover { background: #F7E300; color: #000; }
+.chat-input { flex: none; display: flex; gap: 6px; padding: 8px 10px; border-top: 1px solid #e3e3e3; background: #fff; }
+.chat-input textarea { flex: 1; resize: none; border: 1px solid #ccc; border-radius: 4px; padding: 6px 8px; font: 13px/1.5 Arial, "Microsoft YaHei", sans-serif; max-height: 90px; }
+.chat-input button { flex: none; width: 58px; border: 1px solid #d4c200; background: #F7E300; border-radius: 4px; font-weight: bold; cursor: pointer; }
+.chat-input button:disabled { opacity: .5; cursor: default; }
+.chat-foot { flex: none; padding: 0 10px 6px; font-size: 11px; color: #aaa; background: #fff; text-align: center; }
+@media (max-width: 600px) { .chat { right: 0; bottom: 0; width: 100%; height: 100%; max-height: 100%; border-radius: 0; } }
 
 /* ---------- 内页内容 ---------- */
 .article { font-size: 13px; line-height: 2; color: #333; }

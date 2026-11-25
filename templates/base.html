@@ -59,16 +59,33 @@
   </div>
 </div>
 
-{# ---------- 右侧“在线客服”浮窗 ---------- #}
+{# ---------- 右侧“在线客服”标签 + 智能客服聊天窗口 ---------- #}
 <div class="online" id="online">
-  <div class="online-tab"><i class="ico ico-chat"></i>在<br>线<br>客<br>服</div>
-  <div class="online-box">
-    <div class="online-hd">在线客服<span class="x">×</span></div>
-    <p>工作时间<br><b>{{ site.business_hours }}</b></p>
-    <p>电话：{{ site.tel }}</p>
-    {% for m, who in site.mobiles %}<p>{{ who }}：{{ m }}</p>{% endfor %}
-    <p><a href="{{ url_for('feedback') }}">在线留言 &raquo;</a></p>
+  <div class="online-tab" id="chat-open" title="在线客服"><i class="ico ico-chat"></i>在<br>线<br>客<br>服</div>
+</div>
+
+<div class="chat" id="chat" hidden>
+  <div class="chat-hd">
+    <span class="chat-title"><i class="dot"></i>在线客服</span>
+    <span class="chat-acts">
+      <button type="button" id="chat-human" title="联系人工客服">转人工</button>
+      <button type="button" id="chat-close" title="关闭">×</button>
+    </span>
   </div>
+  <div class="chat-human" id="chat-human-card" hidden>
+    <b>人工客服</b>（{{ site.business_hours }}）<br>
+    电话：<a href="tel:{{ site.tel }}">{{ site.tel }}</a><br>
+    手机：{% for m, who in site.mobiles %}<a href="tel:{{ m }}">{{ m }}</a>（{{ who }}）{% if not loop.last %}、{% endif %}{% endfor %}<br>
+    微信：{{ site.wechat }}<br>
+    <a href="{{ url_for('feedback') }}">在线留言 &raquo;</a>
+  </div>
+  <div class="chat-body" id="chat-body"></div>
+  <div class="chat-quick" id="chat-quick"></div>
+  <form class="chat-input" id="chat-form" autocomplete="off">
+    <textarea id="chat-text" rows="1" maxlength="500" placeholder="请输入您的问题，按回车发送"></textarea>
+    <button type="submit" id="chat-send">发送</button>
+  </form>
+  <div class="chat-foot">AI 自动回复，仅供参考；价格、库存请以业务员确认为准</div>
 </div>
 
 <script src="{{ url_for('static', filename='js/main.js') }}"></script>
