@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block content %}
+{% if items %}
+<ul class="pro-grid">
+  {% for p in items %}
+  <li>
+    <a href="{{ url_for('productshow', id=p.id) }}" class="pic"><img src="{{ p.image or url_for('static', filename='img/noimg.svg') }}" alt="{{ p.model }}"></a>
+    <a href="{{ url_for('productshow', id=p.id) }}" class="model" title="{{ p.name }}">{{ p.model }}</a>
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p class="empty">暂无产品</p>
+{% endif %}
+{% include "_pager.html" %}
+{% endblock %}

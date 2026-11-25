@@ -1,0 +1,4 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="msg-box"><p>{{ message }}</p><p><a href="javascript:history.back()">返回上一页</a> | <a href="{{ url_for('index') }}">返回首页</a></p></div>
+{% endblock %}

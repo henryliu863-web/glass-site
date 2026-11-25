@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+{% from "_field.html" import row %}
+{% block content %}
+<h3 class="form-title">应聘岗位：{{ j.position }}</h3>
+<form method="post" class="form">
+  <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+  <table>
+    {{ row('姓　　名', 'name', form, true, width='w-lg') }}
+    <tr><th>性　　别：</th><td><label><input type="radio" name="gender" value="男" {% if form.get('gender', '男') == '男' %}checked{% endif %}> 男</label> <label><input type="radio" name="gender" value="女" {% if form.get('gender') == '女' %}checked{% endif %}> 女</label></td></tr>
+    {{ row('年　　龄', 'age', form, width='w-sm') }}
+    {{ row('学　　历', 'education', form, width='w-md') }}
+    {{ row('联系电话', 'phone', form, true, width='w-lg') }}
+    {{ row('电子邮箱', 'email', form, width='w-lg') }}
+    {{ row('个人简历', 'resume', form, true, 'textarea') }}
+    <tr><th></th><td><button type="submit">提交</button> <button type="reset">重置</button></td></tr>
+  </table>
+</form>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="member-info">
+  <p>欢迎您，<b>{{ current_member.contact }}</b>（{{ current_member.username }}）　<a href="{{ url_for('member_logout') }}">退出登录</a></p>
+  <p>公司：{{ current_member.company }}　电话：{{ current_member.tel }}　邮箱：{{ current_member.email }}</p>
+  <p>地址：{{ current_member.address }}</p>
+  <p><a class="btn" href="{{ url_for('order') }}">在线定单</a></p>
+</div>
+<h3 class="form-title">我的定单</h3>
+<table class="list-table">
+  <tr><th width="50">编号</th><th>产品</th><th width="80">状态</th><th width="140">提交时间</th></tr>
+  {% for o in orders %}
+  <tr><td>{{ o.id }}</td><td>{{ o.products }}</td><td>{{ o.status }}</td><td>{{ o.created_at }}</td></tr>
+  {% else %}<tr><td colspan="4" class="empty">暂无定单</td></tr>{% endfor %}
+</table>
+{% endblock %}

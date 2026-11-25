@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block main %}
+<div class="body home">
+  <div class="side">
+    {% include "_product_menu.html" %}
+  </div>
+
+  <div class="home-main">
+    <div class="home-row">
+      <div class="block about-block">
+        <div class="block-hd">公司简介<a href="{{ url_for('about') }}" class="more">更多...</a></div>
+        <a href="{{ url_for('about') }}" class="about-pic"><img src="{{ url_for('static', filename='img/about.svg') }}" alt="公司简介"></a>
+      </div>
+      <div class="block equip-block">
+        <div class="block-hd">生产设备<a href="{{ url_for('product') }}" class="more more-sm">MORE . . .</a></div>
+        <div class="equip" id="equip">
+          {% for i in range(1, 5) %}<img src="{{ url_for('static', filename='img/equip' ~ i ~ '.svg') }}" alt="生产设备{{ i }}"{% if i == 1 %} class="on"{% endif %}>{% endfor %}
+          <div class="equip-num">{% for i in range(1, 5) %}<span{% if i == 1 %} class="on"{% endif %}>{{ i }}</span>{% endfor %}</div>
+        </div>
+      </div>
+    </div>
+    <a href="{{ url_for('about') }}" class="ad"><img src="{{ url_for('static', filename='img/ad.svg') }}" alt="今天的质量 / 明天的市场"></a>
+  </div>
+</div>
+<div class="body-bottom white"></div>
+{% endblock %}

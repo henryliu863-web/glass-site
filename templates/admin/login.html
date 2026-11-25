@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><title>后台登录 - {{ site.company }}</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}"></head>
+<body class="login-page">
+<form method="post" class="login-box">
+  <h1>{{ site.company }}<small>网站管理后台</small></h1>
+  {% with msgs = get_flashed_messages(with_categories=true) %}{% for cat, m in msgs %}<div class="flash flash-{{ cat }}">{{ m }}</div>{% endfor %}{% endwith %}
+  <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+  <label>用户名<input type="text" name="username" required autofocus></label>
+  <label>密码<input type="password" name="password" required></label>
+  <button type="submit">登 录</button>
+  <p><a href="{{ url_for('index') }}">&laquo; 返回网站</a></p>
+</form>
+</body>
+</html>

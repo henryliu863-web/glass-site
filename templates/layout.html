@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}{% if crumbs %}{{ crumbs[-1][0] }} - {% endif %}{{ site.title }}{% endblock %}
+{% block main %}
+<div class="body">
+  <div class="side">
+    {% if sidebar == 'about' %}
+      <div class="box-hd">关于我们</div>
+      <ul class="sub-menu">
+        {% for p in about_menu() %}
+        <li{% if request.endpoint == 'about' and request.args.get('id', 'profile') == p.slug %} class="on"{% endif %}><a href="{{ url_for('about', id=p.slug) }}">{{ p.title }}</a></li>
+        {% endfor %}
+        <li{% if request.endpoint == 'contact' %} class="on"{% endif %}><a href="{{ url_for('contact') }}">联系我们</a></li>
+      </ul>
+    {% else %}
+      {% include "_product_menu.html" %}
+    {% endif %}
+
+    <div class="box-hd">联系我们</div>
+    <div class="side-contact">
+      <img src="{{ url_for('static', filename='img/service.svg') }}" alt="" class="svc">
+      <p>联系人：{{ site.contact_person }}</p>
+      <p>电话：{{ site.tel }}</p>
+      <p>传真：{{ site.fax }}</p>
+      <p>手机：{{ site.mobile }}</p>
+      <p>邮箱：{{ site.email }}</p>
+      <p>地址：{{ site.address }}</p>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="loc">当前位置：<a href="{{ url_for('index') }}"><b>首页</b></a>{% for label, href in crumbs %} &gt; {% if href %}<a href="{{ href }}">{{ label }}</a>{% else %}{{ label }}{% endif %}{% endfor %}</div>
+    <div class="inner">
+      {% with msgs = get_flashed_messages(with_categories=true) %}
+        {% for cat, m in msgs %}<div class="flash flash-{{ cat }}">{{ m }}</div>{% endfor %}
+      {% endwith %}
+      {% block content %}{% endblock %}
+    </div>
+  </div>
+</div>
+<div class="body-bottom"></div>
+{% endblock %}

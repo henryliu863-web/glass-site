@@ -1,0 +1,8 @@
+{% if pager %}
+<div class="pager">
+  {% if pager.page > 1 %}<a href="{{ pager.url(1) }}">首页</a> <a href="{{ pager.url(pager.page - 1) }}">&lt;上一页</a>{% else %}<span class="dis">首页</span> <span class="dis">&lt;上一页</span>{% endif %}
+  {% for n in range(1, pager.pages + 1) %}{% if n == pager.page %}<b>{{ n }}</b>{% else %}<a href="{{ pager.url(n) }}">{{ n }}</a>{% endif %} {% endfor %}
+  {% if pager.page < pager.pages %}<a href="{{ pager.url(pager.page + 1) }}">下一页&gt;</a> <a href="{{ pager.url(pager.pages) }}">尾页</a>{% else %}<span class="dis">下一页&gt;</span> <span class="dis">尾页</span>{% endif %}
+  &nbsp; 共 {{ pager.pages }} 页 共 {{ pager.total }} 条信息
+</div>
+{% endif %}

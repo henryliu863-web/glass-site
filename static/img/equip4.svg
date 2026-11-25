@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="249" height="162" viewBox="0 0 249 162">
+<rect width="249" height="162" fill="#e9eaec"/>
+<rect x="0" y="130" width="249" height="32" fill="#c9ccd0"/>
+<rect x="34" y="52" width="180" height="80" rx="6" fill="#5b4f6a"/>
+<rect x="48" y="64" width="70" height="40" rx="3" fill="#9fb4c6"/>
+<rect x="132" y="64" width="66" height="10" fill="#F7E300"/>
+<circle cx="150" cy="100" r="14" fill="#ddd" stroke="#333"/>
+<rect x="60" y="28" width="12" height="26" fill="#777"/><rect x="40" y="22" width="120" height="10" fill="#888"/>
+<text x="124" y="152" text-anchor="middle" font-family="Arial, 'Microsoft YaHei', sans-serif" font-size="12" fill="#333">包装生产线</text>
+</svg>

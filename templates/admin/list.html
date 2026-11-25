@@ -1,0 +1,30 @@
+{% extends "admin/base.html" %}
+{% block title %}{{ res.title }}{% endblock %}
+{% block content %}
+<h2>{{ res.title }}
+  {% if not res.readonly %}<a class="btn" href="{{ url_for('admin.create', name=name) }}">+ 新增</a>{% endif %}
+</h2>
+{% if res.search %}
+<form class="search" method="get"><input type="text" name="q" value="{{ q }}" placeholder="搜索"><button>搜索</button>{% if q %} <a href="{{ url_for('admin.listing', name=name) }}">清除</a>{% endif %}</form>
+{% endif %}
+<table class="tbl">
+  <tr>{% for col, label in res.list %}<th>{{ label }}</th>{% endfor %}<th width="120">操作</th></tr>
+  {% for r in rows %}
+  <tr class="{% if 'is_read' in r.keys() and not r.is_read %}unread{% endif %}">
+    {% for col, label in res.list %}
+    <td>
+      {% if col == 'image' %}{% if r[col] %}<img src="{{ r[col] }}" class="thumb">{% endif %}
+      {% elif col in ('is_read', 'in_about_menu') %}{{ '是' if r[col] else '否' }}
+      {% else %}{{ (r[col] if r[col] is not none else '') | string | truncate(40) }}{% endif %}
+    </td>
+    {% endfor %}
+    <td class="ops">
+      <a href="{{ url_for('admin.edit', name=name, rid=r.id) }}">{{ '查看' if res.readonly else '编辑' }}</a>
+      <form method="post" action="{{ url_for('admin.delete', name=name, rid=r.id) }}" onsubmit="return confirm('确定删除？删除后不能恢复。');">
+        <input type="hidden" name="_csrf" value="{{ csrf_token() }}"><button class="link">删除</button>
+      </form>
+    </td>
+  </tr>
+  {% else %}<tr><td colspan="{{ res.list | length + 1 }}" class="empty">暂无数据</td></tr>{% endfor %}
+</table>
+{% endblock %}

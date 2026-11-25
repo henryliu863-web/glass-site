@@ -1,0 +1,7 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2 class="news-title">{{ item.title }}</h2>
+<p class="news-meta">发布时间：{{ item.created_at[:10] }}　　浏览次数：{{ item.hits + 1 }}</p>
+<div class="article">{{ item.body | safe }}</div>
+<p class="back"><a href="{{ url_for('news') }}">&laquo; 返回新闻列表</a></p>
+{% endblock %}

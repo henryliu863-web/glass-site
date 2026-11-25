@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="352" viewBox="0 0 1000 352">
+<defs><linearGradient id="m" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f4f5f7"/><stop offset=".5" stop-color="#b9bdc4"/><stop offset="1" stop-color="#e6e8eb"/></linearGradient><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#eef0f3"/><stop offset="1" stop-color="#9ea3aa"/></linearGradient></defs>
+<rect width="1000" height="352" fill="url(#bg)"/>
+<g transform="rotate(-18 500 176)">
+  <rect x="80" y="150" width="820" height="56" rx="6" fill="url(#m)" stroke="#8a8f96"/>
+  <rect x="120" y="162" width="300" height="32" rx="4" fill="#cfd3d8"/>
+  <circle cx="860" cy="178" r="12" fill="#999"/><circle cx="170" cy="178" r="7" fill="#777"/>
+</g>
+<g transform="translate(40 40)"><rect width="170" height="120" rx="10" fill="url(#m)" stroke="#888"/><circle cx="60" cy="60" r="24" fill="#c4c8cd" stroke="#888"/></g>
+<g transform="translate(700 150)"><rect width="230" height="110" rx="12" fill="url(#m)" stroke="#888"/><circle cx="190" cy="55" r="30" fill="#d0d3d7" stroke="#888"/></g>
+<text x="60" y="320" font-family="Arial, 'Microsoft YaHei', sans-serif" font-size="26" font-weight="bold" fill="#333">玻璃切割工具 · 门控五金</text>
+</svg>

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="352" viewBox="0 0 1000 352">
+<defs><linearGradient id="m" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f4f5f7"/><stop offset=".5" stop-color="#b9bdc4"/><stop offset="1" stop-color="#e6e8eb"/></linearGradient></defs>
+<rect width="1000" height="352" fill="#1d1d1d"/>
+<polygon points="0,240 1000,120 1000,352 0,352" fill="#F7E300"/>
+<g fill="#F7E300"><polygon points="330,352 370,352 470,250 430,250"/><polygon points="376,352 416,352 516,250 476,250"/><polygon points="422,352 462,352 562,250 522,250"/><polygon points="468,352 508,352 608,250 568,250"/><polygon points="514,352 554,352 654,250 614,250"/></g>
+<g fill="#fff" opacity=".9"><polygon points="560,250 585,250 640,190 615,190"/><polygon points="620,250 645,250 700,190 675,190"/><polygon points="680,250 705,250 760,190 735,190"/><polygon points="740,250 765,250 820,190 795,190"/></g>
+<text x="58" y="112" font-family="Georgia, serif" font-weight="bold" font-style="italic" font-size="58" fill="#F7E300">GLASS DOOR</text>
+<text x="104" y="160" font-family="Georgia, serif" font-weight="bold" font-size="26" fill="#F7E300" letter-spacing="2">CONTROL HARDWARE</text>
+<text x="104" y="196" font-family="Arial, 'Microsoft YaHei', sans-serif" font-size="18" fill="#ddd" letter-spacing="6">玻璃门控五金 · 品质之选</text>
+<g transform="translate(640 60)">
+  <rect x="0" y="40" width="170" height="70" rx="8" fill="url(#m)" stroke="#888"/>
+  <rect x="20" y="58" width="130" height="34" rx="4" fill="#d9dce0" stroke="#999"/>
+  <circle cx="40" cy="75" r="6" fill="#777"/><circle cx="130" cy="75" r="6" fill="#777"/>
+  <rect x="200" y="20" width="60" height="140" rx="30" fill="url(#m)" stroke="#888"/>
+  <rect x="90" y="150" width="200" height="40" rx="6" fill="url(#m)" stroke="#888"/>
+</g></svg>

@@ -1,0 +1,9 @@
+<div class="box-hd">产品分类</div>
+<ul class="cat-menu">
+  {% for node in cat_tree() %}
+  <li class="big"><a href="{{ url_for('product', bigid=node.big.id) }}"><i class="plus"></i>{{ node.big.name }}</a></li>
+  {% for s in node.subs %}
+  <li class="small{% if active_cat == s.id %} on{% endif %}"><a href="{{ url_for('product', smallid=s.id) }}">{{ s.name }}</a></li>
+  {% endfor %}
+  {% endfor %}
+</ul>

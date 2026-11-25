@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+{% block content %}
+{% for j in items %}
+<table class="job">
+  <tr><th>招聘对象：</th><td>{{ j.position }}</td><th>招聘人数：</th><td>{{ j.headcount }}</td></tr>
+  <tr><th>工作地点：</th><td>{{ j.location }}</td><th>工资待遇：</th><td>{{ j.salary }}</td></tr>
+  <tr><th>发布时间：</th><td>{{ j.created_at[:10] | replace('-', '/') }}</td><th>有效期限：</th><td>{{ j.valid_days }}天</td></tr>
+  <tr><th>招聘要求：</th><td colspan="3">{{ j.requirement | nl2br }}</td></tr>
+  <tr><td colspan="4" class="apply"><a href="{{ url_for('job_apply', id=j.id) }}">应聘此岗位</a></td></tr>
+</table>
+{% else %}<p class="empty">暂无招聘信息</p>{% endfor %}
+{% include "_pager.html" %}
+{% endblock %}

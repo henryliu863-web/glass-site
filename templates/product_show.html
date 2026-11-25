@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2 class="pro-title">{{ p.model }}</h2>
+{% if p.name %}<p class="pro-name">{{ p.name }}</p>{% endif %}
+<div class="pro-detail">
+  <div class="pro-img"><img src="{{ p.image or url_for('static', filename='img/noimg.svg') }}" alt="{{ p.model }}"></div>
+  {% set sp = p.specs | specs %}
+  {% if sp %}
+  <table class="spec">
+    <tr>{% for h in sp.headers %}<th>{{ h }}</th>{% endfor %}</tr>
+    {% set merge = sp.merge or [] %}
+    {% for row in sp.rows %}
+    {% set ri = loop.index0 %}
+    <tr>
+      {% for cell in row %}
+        {% if loop.index0 in merge %}
+          {% if ri == 0 %}<td rowspan="{{ sp.rows | length }}">{{ cell }}</td>{% endif %}
+        {% else %}<td>{{ cell }}</td>{% endif %}
+      {% endfor %}
+    </tr>
+    {% endfor %}
+  </table>
+  {% endif %}
+</div>
+{% if p.description %}<div class="article">{{ p.description | safe }}</div>{% endif %}
+<div class="pro-actions"><a class="btn" href="{{ url_for('order', product=p.model ~ (' ' ~ p.name if p.name else '')) }}">在线定购此产品</a></div>
+<div class="prevnext">
+  上一个：{% if prev %}<a href="{{ url_for('productshow', id=prev.id) }}">{{ prev.model }}</a>{% else %}没有了{% endif %}
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  下一个：{% if nxt %}<a href="{{ url_for('productshow', id=nxt.id) }}">{{ nxt.model }}</a>{% else %}没有了{% endif %}
+</div>
+{% endblock %}

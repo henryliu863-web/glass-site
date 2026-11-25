@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>{% block title %}{{ site.title }}{% endblock %}</title>
+<meta name="keywords" content="{{ site.keywords }}">
+<meta name="description" content="{{ site.description }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<div class="wrap">
+  {# ---------- 页头：Logo + 语言 ---------- #}
+  <div class="top">
+    <a class="logo" href="{{ url_for('index') }}">
+      <span class="logo-brand">{{ site.brand }}<sup>®</sup></span>
+      <span class="logo-text">
+        <b>{{ site.company }}</b>
+        <small>{{ site.company_en }}</small>
+      </span>
+    </a>
+    <div class="lang">· <a href="{{ url_for('index') }}" class="on">中文版</a></div>
+  </div>
+
+  {# ---------- 导航 ---------- #}
+  <div class="nav">
+    <ul>
+      {% for ep, label in nav_items %}
+      <li{% if request.endpoint == ep or (ep == 'product' and request.endpoint == 'productshow') or (ep == 'news' and request.endpoint == 'news_show') or (ep == 'job' and request.endpoint == 'job_apply') %} class="on"{% endif %}><a href="{{ url_for(ep) }}">{{ label }}</a></li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  {# ---------- 轮播 Banner ---------- #}
+  <div class="banner" id="banner">
+    <ul class="slides">
+      <li class="on"><img src="{{ url_for('static', filename='img/banner1.svg') }}" alt="玻璃门控五金"></li>
+      <li><img src="{{ url_for('static', filename='img/banner2.svg') }}" alt="玻璃切割工具"></li>
+    </ul>
+    <div class="num"><span class="on">1</span><span>2</span></div>
+  </div>
+
+  {% block main %}{% endblock %}
+</div>
+
+{# ---------- 页脚 ---------- #}
+<div class="footer">
+  <div class="foot-card">
+    <span class="foot-logo"><b>{{ site.brand }}<sup>®</sup></b><span><b>{{ site.company }}</b><small>{{ site.company_en }}</small></span></span>
+    <span class="foot-contact">
+      <span><i class="ico ico-tel"></i>{{ site.footer_phone }}</span>
+      <span><i class="ico ico-mail"></i>{{ site.email }}</span>
+    </span>
+    <img class="qr" src="{{ url_for('static', filename='img/qrcode.svg') }}" alt="二维码" width="62" height="62">
+  </div>
+  <div class="copy">
+    Copyright {{ site.copyright_years }} {{ site.company }} All right reserved.<br>
+    Add：{{ site.address }}
+    <br><a href="{{ url_for('admin.dashboard') }}">管理入口</a>
+  </div>
+</div>
+
+{# ---------- 右侧“在线客服”浮窗 ---------- #}
+<div class="online" id="online">
+  <div class="online-tab"><i class="ico ico-chat"></i>在<br>线<br>客<br>服</div>
+  <div class="online-box">
+    <div class="online-hd">在线客服<span class="x">×</span></div>
+    <p>工作时间<br><b>{{ site.business_hours }}</b></p>
+    <p>电话：{{ site.tel }}</p>
+    {% for m, who in site.mobiles %}<p>{{ who }}：{{ m }}</p>{% endfor %}
+    <p><a href="{{ url_for('feedback') }}">在线留言 &raquo;</a></p>
+  </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

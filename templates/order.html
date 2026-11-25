@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+{% from "_field.html" import row %}
+{% block content %}
+<form method="post" class="form">
+  <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+  <table>
+    <tr><th>您想购的产品：</th><td><textarea name="products" rows="4" required>{{ form.get('products', '') }}</textarea><span class="req">*</span></td></tr>
+    <tr><th>购买说明：</th><td><textarea name="description" rows="6">{{ form.get('description', '') }}</textarea></td></tr>
+    <tr><th class="sec" colspan="2">联系方式</th></tr>
+    {{ row('姓　　名', 'name', form, true, width='w-lg') }}
+    {{ row('电话号码', 'tel', form, true, width='w-lg') }}
+    {{ row('传真号码', 'fax', form, width='w-lg') }}
+    {{ row('电子邮箱', 'email', form, width='w-lg') }}
+    {{ row('发货地址', 'address', form, true, width='w-xl') }}
+    <tr><th></th><td><button type="submit">提交</button> <button type="reset">重置</button></td></tr>
+  </table>
+</form>
+{% endblock %}

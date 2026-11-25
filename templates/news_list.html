@@ -1,0 +1,9 @@
+{% extends "layout.html" %}
+{% block content %}
+<ul class="news-list">
+  {% for n in items %}
+  <li><span class="dot">·</span><a href="{{ url_for('news_show', id=n.id) }}">{{ n.title }}</a><span class="date">[{{ n.created_at[:10] }}]</span></li>
+  {% else %}<li>暂无新闻</li>{% endfor %}
+</ul>
+{% include "_pager.html" %}
+{% endblock %}

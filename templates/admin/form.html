@@ -1,0 +1,38 @@
+{% extends "admin/base.html" %}
+{% block title %}{{ res.title }}{% endblock %}
+{% block content %}
+<h2>{{ res.title }} · {{ {'new': '新增', 'edit': '编辑', 'view': '查看'}[mode] }}
+  <a class="btn gray" href="{{ url_for('admin.listing', name=name) }}">返回列表</a></h2>
+
+{% if mode == 'view' %}
+<table class="detail">
+  {% for col, label, typ, req in res.fields %}
+  <tr><th>{{ label }}</th><td>{{ (row[col] if row[col] is not none else '') | nl2br }}</td></tr>
+  {% endfor %}
+</table>
+{% endif %}
+
+{% if fields %}
+<form method="post" enctype="multipart/form-data" class="aform">
+  <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+  {% for col, label, typ, req in fields %}
+  {% set val = (row[col] if row and row[col] is not none else '') %}
+  <div class="f">
+    <label>{{ label }}{% if req %}<em>*</em>{% endif %}</label>
+    {% if typ == 'textarea' %}<textarea name="{{ col }}" rows="6">{{ val }}</textarea>
+    {% elif typ == 'html' %}<textarea name="{{ col }}" rows="12" class="code">{{ val }}</textarea><small>支持 HTML，如 &lt;p&gt;段落&lt;/p&gt;、&lt;img src="..."&gt;</small>
+    {% elif typ == 'json' %}<textarea name="{{ col }}" rows="8" class="code">{{ val }}</textarea><small>格式：{"headers": ["型号", "规格"], "rows": [["A-001", "10mm"]]}，可选 "merge": [列序号] 让该列合并单元格</small>
+    {% elif typ == 'select' %}
+      <select name="{{ col }}">{% for v, t in options[col] %}<option value="{{ v }}"{% if v|string == val|string %} selected{% endif %}>{{ t }}</option>{% endfor %}</select>
+    {% elif typ == 'bool' %}<input type="checkbox" name="{{ col }}" value="1"{% if val and val|string != '0' %} checked{% endif %}>
+    {% elif typ == 'image' %}
+      {% if val %}<img src="{{ val }}" class="preview">{% endif %}
+      <input type="text" name="{{ col }}" value="{{ val }}" placeholder="图片地址"> 或上传：<input type="file" name="{{ col }}" accept="image/*">
+    {% elif typ == 'number' %}<input type="number" name="{{ col }}" value="{{ val or 0 }}">
+    {% else %}<input type="text" name="{{ col }}" value="{{ val }}"{% if col == 'created_at' %} placeholder="留空自动使用当前时间"{% endif %}>{% endif %}
+  </div>
+  {% endfor %}
+  <div class="f"><label></label><button type="submit">保存</button></div>
+</form>
+{% endif %}
+{% endblock %}

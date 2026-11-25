@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="article contact">
+  <h3>{{ site.company }}</h3>
+  <p>联系人：{{ site.contact_person }}</p>
+  <p>电　话：{{ site.tel }}</p>
+  <p>传　真：{{ site.fax }}</p>
+  <p>手　机：{% for m, who in site.mobiles %}{{ m }}（{{ who }}）{% if not loop.last %}&nbsp;&nbsp;{% endif %}{% endfor %}</p>
+  <p>邮　箱：<a href="mailto:{{ site.email }}">{{ site.email }}</a></p>
+  <p>地　址：{{ site.address }}</p>
+</div>
+{% endblock %}

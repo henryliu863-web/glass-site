@@ -1,0 +1,6 @@
+{% macro row(label, name, form, req=false, type='text', width='') -%}
+<tr>
+  <th>{{ label }}：</th>
+  <td>{% if type == 'textarea' %}<textarea name="{{ name }}" rows="10"{% if req %} required{% endif %}>{{ form.get(name, '') }}</textarea>{% else %}<input type="{{ type }}" name="{{ name }}" value="{% if type != 'password' %}{{ form.get(name, '') }}{% endif %}" class="{{ width }}"{% if req %} required{% endif %}>{% endif %}{% if req %}<span class="req">*</span>{% endif %}</td>
+</tr>
+{%- endmacro %}
