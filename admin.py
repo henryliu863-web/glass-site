@@ -33,13 +33,17 @@ def _big_options():
 RESOURCES = {
     "products": {
         "title": "产品管理", "table": "products", "order": "p.category_id, p.sort, p.id",
-        "list": [("id", "ID"), ("model", "型号"), ("name", "名称"), ("cat", "分类"), ("image", "图片")],
+        "list": [("id", "ID"), ("model", "型号"), ("name", "名称"), ("cat", "分类"), ("price", "价格"),
+                 ("image", "图片")],
         "list_sql": "SELECT p.*, c.name AS cat FROM products p LEFT JOIN categories c ON c.id=p.category_id",
         "fields": [("category_id", "所属分类", "select", True), ("model", "型号", "text", True),
                    ("name", "名称", "text", False), ("image", "产品图片", "image", False),
+                   ("price", "价格", "textarea", False), ("show_price", "在产品详情页公开显示价格", "bool", False),
                    ("specs", "规格表(JSON)", "json", False), ("description", "详细介绍", "html", False),
                    ("sort", "排序", "number", False)],
         "options": {"category_id": _cat_options},
+        "help": {"price": "留空 = 智能客服不报价、引导客户留联系方式。可写阶梯价，例如：\n1-99 把：¥12/把\n100 把以上：¥10/把（含税，不含运费）",
+                 "show_price": "不勾选时，价格只给智能客服使用，网页上不显示"},
         "search": ["p.model", "p.name"],
     },
     "categories": {

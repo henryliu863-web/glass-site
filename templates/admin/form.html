@@ -30,6 +30,7 @@
       <input type="text" name="{{ col }}" value="{{ val }}" placeholder="图片地址"> 或上传：<input type="file" name="{{ col }}" accept="image/*">
     {% elif typ == 'number' %}<input type="number" name="{{ col }}" value="{{ val or 0 }}">
     {% else %}<input type="text" name="{{ col }}" value="{{ val }}"{% if col == 'created_at' %} placeholder="留空自动使用当前时间"{% endif %}>{% endif %}
+    {% if res.help and res.help.get(col) %}<small>{{ res.help[col] | nl2br }}</small>{% endif %}
   </div>
   {% endfor %}
   <div class="f"><label></label><button type="submit">保存</button></div>

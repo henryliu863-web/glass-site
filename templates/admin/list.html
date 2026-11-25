@@ -14,7 +14,7 @@
     {% for col, label in res.list %}
     <td>
       {% if col == 'image' %}{% if r[col] %}<img src="{{ r[col] }}" class="thumb">{% endif %}
-      {% elif col in ('is_read', 'in_about_menu', 'has_lead') %}{{ '是' if r[col] else '否' }}
+      {% elif col in ('is_read', 'in_about_menu', 'has_lead', 'show_price') %}{{ '是' if r[col] else '否' }}
       {% else %}{{ (r[col] if r[col] is not none else '') | string | truncate(40) }}{% endif %}
     </td>
     {% endfor %}

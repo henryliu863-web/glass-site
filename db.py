@@ -39,6 +39,8 @@ CREATE TABLE IF NOT EXISTS products (
     name TEXT NOT NULL DEFAULT '',
     image TEXT NOT NULL DEFAULT '',
     specs TEXT NOT NULL DEFAULT '', -- JSON: {"headers": [...], "rows": [[...], ...]}
+    price TEXT NOT NULL DEFAULT '', -- 价格（自由格式，可写阶梯价）；留空则客服不报价
+    show_price INTEGER NOT NULL DEFAULT 0, -- 是否在产品详情页公开显示价格
     description TEXT NOT NULL DEFAULT '',
     sort INTEGER NOT NULL DEFAULT 0,
     created_at TEXT NOT NULL DEFAULT (datetime('now', 'localtime'))
@@ -148,6 +150,25 @@ CREATE TABLE IF NOT EXISTS orders (
 """
 
 
+# 旧数据库升级：给已有的表补上新增的列
+MIGRATIONS = [
+    ("products", "price", "TEXT NOT NULL DEFAULT ''"),
+    ("products", "show_price", "INTEGER NOT NULL DEFAULT 0"),
+]
+
+
+def _migrate(db):
+    for table, col, ddl in MIGRATIONS:
+        cols = [r[1] for r in db.execute(f"PRAGMA table_info({table})")]
+        if col not in cols:
+            try:
+                db.execute(f"ALTER TABLE {table} ADD COLUMN {col} {ddl}")
+            except sqlite3.OperationalError as e:  # 另一个进程刚好先加上了
+                if "duplicate column" not in str(e):
+                    raise
+    db.commit()
+
+
 def get_db():
     if "db" not in g:
         path = current_app.config["DATABASE"]
@@ -182,6 +203,7 @@ def init_db(seed=True):
     db = get_db()
     db.execute("PRAGMA busy_timeout = 10000")
     db.executescript(SCHEMA)
+    _migrate(db)
     cfg = current_app.config
     # gunicorn 多个进程会同时启动：先拿写锁，再检查、写入，避免重复初始化
     db.execute("BEGIN IMMEDIATE")

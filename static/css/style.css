@@ -222,3 +222,5 @@ img { border: 0; vertical-align: middle; }
 .job td.apply a { color: #e60012; }
 
 .msg-box { text-align: center; padding: 50px 0; font-size: 14px; }
+.pro-price { margin: 0 auto 12px; max-width: 520px; padding: 8px 14px; background: #fffbe0; border: 1px solid #eee3a0; line-height: 1.8; }
+.pro-price small { color: #999; }

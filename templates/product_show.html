@@ -22,6 +22,7 @@
   </table>
   {% endif %}
 </div>
+{% if p.show_price and p.price %}<div class="pro-price"><b>参考价格：</b>{{ p.price | nl2br }}<br><small>大批量另有优惠，最终价格以业务员报价为准</small></div>{% endif %}
 {% if p.description %}<div class="article">{{ p.description | safe }}</div>{% endif %}
 <div class="pro-actions"><a class="btn" href="{{ url_for('order', product=p.model ~ (' ' ~ p.name if p.name else '')) }}">在线定购此产品</a></div>
 <div class="prevnext">
