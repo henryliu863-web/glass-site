@@ -152,16 +152,23 @@ def execute(sql, args=()):
 
 def init_db(seed=True):
     db = get_db()
+    db.execute("PRAGMA busy_timeout = 10000")
     db.executescript(SCHEMA)
     cfg = current_app.config
-    if not db.execute("SELECT 1 FROM admins").fetchone():
+    # gunicorn 多个进程会同时启动：先拿写锁，再检查、写入，避免重复初始化
+    db.execute("BEGIN IMMEDIATE")
+    try:
         db.execute(
-            "INSERT INTO admins (username, password_hash) VALUES (?, ?)",
+            "INSERT OR IGNORE INTO admins (username, password_hash) "
+            "SELECT ?, ? WHERE NOT EXISTS (SELECT 1 FROM admins)",
             (cfg["ADMIN_USERNAME"], generate_password_hash(cfg["ADMIN_PASSWORD"])),
         )
-    if seed and not db.execute("SELECT 1 FROM categories").fetchone():
-        _seed(db)
-    db.commit()
+        if seed and not db.execute("SELECT 1 FROM categories").fetchone():
+            _seed(db)
+        db.commit()
+    except Exception:
+        db.rollback()
+        raise
 
 
 # --------------------------------------------------------------------------
